@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Heidelberg Reader</string>
+
+    <string name="title_question_detail">Question Detail</string>
 </resources>
