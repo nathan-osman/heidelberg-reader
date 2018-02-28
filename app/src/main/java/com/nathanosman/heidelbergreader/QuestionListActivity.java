@@ -65,7 +65,8 @@ public class QuestionListActivity extends AppCompatActivity {
         super.onStart();
 
         // Start listening for broadcasts
-        registerReceiver(mReceiver, new IntentFilter(QuestionService.LOAD_SUCCESS));
+        IntentFilter filter = new IntentFilter(QuestionService.LOADED);
+        registerReceiver(mReceiver, filter);
 
         // Bind to the service
         Intent intent = new Intent(this, QuestionService.class);
