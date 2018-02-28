@@ -55,12 +55,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView mNumber;
         private TextView mTitle;
         private TextView mSummary;
 
         ViewHolder(View itemView) {
             super(itemView);
 
+            mNumber = itemView.findViewById(R.id.question_list_number);
             mTitle = itemView.findViewById(R.id.question_list_title);
             mSummary = itemView.findViewById(R.id.question_list_summary);
         }
@@ -84,13 +86,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         Question question = mBinder.getQuestion(position);
 
         // Populate the view holder with the question data
-        holder.mTitle.setText(
-                mContext.getString(
-                        R.string.adapter_question_title,
-                        question.getNumber(),
-                        question.getQuestion()
-                )
-        );
+        holder.mNumber.setText(mContext.getString(R.string.adapter_question_number, question.getNumber()));
+        holder.mTitle.setText(question.getQuestion());
         holder.mSummary.setText(question.getAnswer());
 
         holder.itemView.setTag(position);
