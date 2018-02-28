@@ -1,99 +1,44 @@
 package com.nathanosman.heidelbergreader;
 
+import android.content.ComponentName;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-
 /**
  * RecyclerView adapter that displays a list of questions
  */
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
-    /**
-     * Data for an individual question
-     */
-    private class Question {
-
-        private int mNumber;
-        private String mQuestion;
-        private String mAnswer;
-        private String[] mReferences;
-
-        int getNumber() {
-            return mNumber;
-        }
-
-        String getQuestion() {
-            return mQuestion;
-        }
-
-        String getAnswer() {
-            return mAnswer;
-        }
-
-        String[] getReferences() {
-            return mReferences;
-        }
-    }
-
-    private Context mContext;
-    private Question[] mQuestions;
+    private QuestionService.LocalBinder mBinder;
 
     /**
-     * Task for loading the questions from the JSON file
+     * Create a new adapter
+     * @param context use this context to bind to the service
      */
-    private class LoadTask extends AsyncTask<Void, Void, Question[]> {
-
-        @Override
-        protected Question[] doInBackground(Void... voids) {
-            Gson gson = new Gson();
-            try {
-                JsonReader reader = new JsonReader(
-                        new InputStreamReader(
-                                mContext.getAssets().open("questions.json")
-                        )
-                );
-                Type questionsType = new TypeToken<Question[]>() {}.getType();
-                return gson.fromJson(reader, questionsType);
-            } catch (IOException|JsonParseException e) {
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Question[] questions) {
-            mQuestions = questions;
-            notifyDataSetChanged();
-        }
-    }
-
     QuestionAdapter(Context context) {
-        mContext = context;
+        context.bindService(
+                new Intent(context, QuestionService.class),
+                new ServiceConnection() {
 
-        // Immediately load the questions
-        new LoadTask().execute();
-    }
+                    @Override
+                    public void onServiceConnected(ComponentName name, IBinder service) {
+                        mBinder = (QuestionService.LocalBinder) service;
+                    }
 
-    /**
-     * Retrieve a question from the list
-     * @param index question index
-     * @return question data
-     */
-    Question getQuestion(int index) {
-        return mQuestions[index];
+                    @Override
+                    public void onServiceDisconnected(ComponentName name) {
+                        mBinder = null;
+                    }
+
+                }, Context.BIND_AUTO_CREATE
+        );
     }
 
     /**
@@ -127,7 +72,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         // Retrieve the question for the specified index
-        Question question = mQuestions[position];
+        Question question = mBinder.getQuestion(position);
 
         // Populate the view holder with the question data
         holder.mTitle.setText(question.getQuestion());
@@ -136,6 +81,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return mQuestions.length;
+        return mBinder.getQuestionCount();
     }
 }
