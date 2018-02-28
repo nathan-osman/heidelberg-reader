@@ -21,6 +21,8 @@ import android.support.v7.widget.Toolbar;
  */
 public class QuestionListActivity extends AppCompatActivity {
 
+    private boolean mTwoPane;
+
     private QuestionAdapter mAdapter;
     private QuestionService.LocalBinder mBinder;
 
@@ -75,9 +77,27 @@ public class QuestionListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        // Create the adapter
-        mAdapter = new QuestionAdapter(this);
+        // Determine if two-pane mode is active
+        if (findViewById(R.id.question_detail_container) != null) {
+            mTwoPane = true;
+        }
 
+        // Create the adapter
+        mAdapter = new QuestionAdapter(this, new QuestionAdapter.Listener() {
+
+            @Override
+            public void onNavigate(int index) {
+                if (mTwoPane) {
+                    //...
+                } else {
+                    Intent intent = new Intent(QuestionListActivity.this, QuestionDetailActivity.class);
+                    intent.putExtra(QuestionDetailFragment.ARG_QUESTION_INDEX, index);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        // Assign the adapter to the recycler view
         RecyclerView recyclerView = findViewById(R.id.question_list);
         recyclerView.setAdapter(mAdapter);
     }
