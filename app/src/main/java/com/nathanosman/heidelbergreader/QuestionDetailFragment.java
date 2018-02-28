@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Display the data for a question
@@ -50,6 +51,9 @@ public class QuestionDetailFragment extends Fragment {
             if (appBarLayout != null) {
                 appBarLayout.setTitle(question.getQuestion());
             }
+
+            // Show the question content
+            ((TextView) getActivity().findViewById(R.id.question_detail)).setText(question.getAnswer());
         }
 
         // We're done, unbind from the service
