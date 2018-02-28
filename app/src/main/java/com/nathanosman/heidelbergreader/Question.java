@@ -1,5 +1,7 @@
 package com.nathanosman.heidelbergreader;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Data for an individual question in the catechism
  *
@@ -8,9 +10,16 @@ package com.nathanosman.heidelbergreader;
  */
 class Question {
 
+    @SerializedName("number")
     private int mNumber;
+
+    @SerializedName("question")
     private String mQuestion;
+
+    @SerializedName("answer")
     private String mAnswer;
+
+    @SerializedName("references")
     private String[] mReferences;
 
     /**

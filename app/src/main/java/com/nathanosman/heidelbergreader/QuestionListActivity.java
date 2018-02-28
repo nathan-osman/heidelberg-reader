@@ -30,10 +30,10 @@ public class QuestionListActivity extends AppCompatActivity {
     private void assignBinder() {
         if (mBinder != null && mBinder.isLoaded()) {
             String errorMessage = mBinder.getErrorMessage();
-            if (errorMessage != null) {
+            if (errorMessage == null) {
                 mAdapter.setBinder(mBinder);
             } else {
-                // TODO: show error message
+                // TODO show error message
             }
         } else {
             mAdapter.setBinder(null);
