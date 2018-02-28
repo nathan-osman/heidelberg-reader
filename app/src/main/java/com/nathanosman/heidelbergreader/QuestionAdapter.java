@@ -1,8 +1,10 @@
 package com.nathanosman.heidelbergreader;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +22,23 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     /**
      * Create a new adapter
-     * @param context use this context to bind to the service
+     * @param context use this context
      */
     QuestionAdapter(Context context) {
+
+        // Listen for broadcasts from the service
+        context.registerReceiver(
+                new BroadcastReceiver() {
+
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        notifyDataSetChanged();
+                    }
+                },
+                new IntentFilter(QuestionService.LOAD_SUCCESS)
+        );
+
+        // Bind to the service
         context.bindService(
                 new Intent(context, QuestionService.class),
                 new ServiceConnection() {
