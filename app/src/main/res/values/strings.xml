@@ -2,4 +2,6 @@
     <string name="app_name">Heidelberg Reader</string>
 
     <string name="title_question_detail">Question Detail</string>
+
+    <string name="adapter_question_title">Question %1$d: %2$s</string>
 </resources>

@@ -21,7 +21,7 @@ import android.support.v7.widget.Toolbar;
  */
 public class QuestionListActivity extends AppCompatActivity {
 
-    private QuestionAdapter mAdapter = new QuestionAdapter();
+    private QuestionAdapter mAdapter;
     private QuestionService.LocalBinder mBinder;
 
     /**
@@ -74,6 +74,9 @@ public class QuestionListActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
+
+        // Create the adapter
+        mAdapter = new QuestionAdapter(this);
 
         RecyclerView recyclerView = findViewById(R.id.question_list);
         recyclerView.setAdapter(mAdapter);

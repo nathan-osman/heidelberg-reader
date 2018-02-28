@@ -1,5 +1,6 @@
 package com.nathanosman.heidelbergreader;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,12 @@ import android.widget.TextView;
  */
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
 
+    private Context mContext;
     private QuestionService.LocalBinder mBinder;
+
+    QuestionAdapter(Context context) {
+        mContext = context;
+    }
 
     /**
      * Set the binder for retrieving question data
@@ -55,7 +61,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         Question question = mBinder.getQuestion(position);
 
         // Populate the view holder with the question data
-        holder.mTitle.setText(question.getQuestion());
+        holder.mTitle.setText(
+                mContext.getString(
+                        R.string.adapter_question_title,
+                        question.getNumber(),
+                        question.getQuestion()
+                )
+        );
         holder.mSummary.setText(question.getAnswer());
     }
 
