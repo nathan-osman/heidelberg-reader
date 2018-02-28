@@ -89,7 +89,14 @@ public class QuestionListActivity extends AppCompatActivity {
             @Override
             public void onNavigate(int index) {
                 if (mTwoPane) {
-                    //...
+                    Bundle arguments = new Bundle();
+                    arguments.putInt(QuestionDetailFragment.ARG_QUESTION_INDEX, index);
+                    QuestionDetailFragment fragment = new QuestionDetailFragment();
+                    fragment.setArguments(arguments);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.question_detail_container, fragment)
+                            .commit();
                 } else {
                     Intent intent = new Intent(QuestionListActivity.this, QuestionDetailActivity.class);
                     intent.putExtra(QuestionDetailFragment.ARG_QUESTION_INDEX, index);
