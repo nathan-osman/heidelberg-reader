@@ -32,8 +32,26 @@
         "question": "What does the Law of God require of us?",
         "answer": "This Christ teaches us in sum, Matth. 22: Thou shalt love the Lord, thy God with all thy heart and with thy soul, and with all thy mind, and with all thy strength. This is the first and great commandment; and the second is like unto it: Thou shalt love thy neighbor as thyself. On these two commandments hang all the law and the prophets.",
         "references": [
-            "Romands 13:10",
+            "Romans 13:10",
             "Leviticus 19:18"
+        ]
+    },
+    {
+        "number": 5,
+        "question": "Canst thou keep all this perfectly?",
+        "answer": "No: for I am by nature prone to hate God and my neighbor.",
+        "references": [
+            "Romans 8:7"
+        ]
+    },
+    {
+        "number": 6,
+        "question": "Did God create man thus wicked and perverse?",
+        "answer": "No, but God created man good, and after His own image, that is, in righteousness and true holiness; that he might rightly know God his Creator, heartily love Him, and live with Him in eternal blessedness, to praise and glorify Him.",
+        "references": [
+            "Genesis 1:27",
+            "Genesis 1:31",
+            "Ephesians 4:24"
         ]
     }
 ]
