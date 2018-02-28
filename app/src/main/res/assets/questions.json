@@ -1,24 +1,22 @@
-{
-    "questions": [
-        {
-            "number": 1,
-            "question": "What is thy only comfort in life and in death?",
-            "answer": "That I, with body and soul, both in life and in death, am not my own, but belong to my faithful Saviour Jesus Christ, who with His precious blood has fully satisfied for all my sins, and redeemed me from all the power of the devil; and so preserves me, that without the will of my Father in heaven not a hair can fall from my head; yea, that all things must work together for my salvation. Wherefore, by His Holy Spirit, He also assures me of eternal life, and makes me heartily willing and ready henceforth to live unto Him.",
-            "references": [
-                "Romans 14:7,8",
-                "1 Corinthians 6:19",
-                "1 Peter 1:18,19",
-                "1 Peter 1:5",
-                "Romans 8:28"
-            ]
-        },
-        {
-            "number": 2,
-            "question": "How many things are necessary for thee to know, that thou in this comfort mayest live and die happily?",
-            "answer": "Three things: First, the greatness of my sin and misery. Second, how I am redeemed from all my sins and misery. Third, how I am to be thankful to God for such redemption.",
-            "references": [
-                "Romans 7:24,25"
-            ]
-        }
-    ]
-}
+[
+    {
+        "number": 1,
+        "question": "What is thy only comfort in life and in death?",
+        "answer": "That I, with body and soul, both in life and in death, am not my own, but belong to my faithful Saviour Jesus Christ, who with His precious blood has fully satisfied for all my sins, and redeemed me from all the power of the devil; and so preserves me, that without the will of my Father in heaven not a hair can fall from my head; yea, that all things must work together for my salvation. Wherefore, by His Holy Spirit, He also assures me of eternal life, and makes me heartily willing and ready henceforth to live unto Him.",
+        "references": [
+            "Romans 14:7,8",
+            "1 Corinthians 6:19",
+            "1 Peter 1:18,19",
+            "1 Peter 1:5",
+            "Romans 8:28"
+        ]
+    },
+    {
+        "number": 2,
+        "question": "How many things are necessary for thee to know, that thou in this comfort mayest live and die happily?",
+        "answer": "Three things: First, the greatness of my sin and misery. Second, how I am redeemed from all my sins and misery. Third, how I am to be thankful to God for such redemption.",
+        "references": [
+            "Romans 7:24,25"
+        ]
+    }
+]
