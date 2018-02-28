@@ -24,7 +24,8 @@ public class QuestionService extends Service {
 
     public static final String LOADED = "com.nathanosman.heidelbergreader.LOADED";
 
-    private String mError;
+    private boolean mLoaded;
+    private String mErrorMessage;
     private Question[] mQuestions;
 
     /**
@@ -33,18 +34,25 @@ public class QuestionService extends Service {
     class LocalBinder extends Binder {
 
         /**
-         * Retrieve the error if one occurred
-         * @return error description or null if no error
+         * Determine if the question data has been loaded
          */
-        String getError() {
-            return mError;
+        boolean isLoaded() {
+            return mLoaded;
+        }
+
+        /**
+         * Retrieve the error if one occurred
+         * @return error message or null if no error
+         */
+        String getErrorMessage() {
+            return mErrorMessage;
         }
 
         /**
          * Retrieve the number of questions
          */
         int getQuestionCount() {
-            return mQuestions != null ? mQuestions.length : 0;
+            return mQuestions.length;
         }
 
         /**
@@ -69,11 +77,11 @@ public class QuestionService extends Service {
          */
         static class Result {
 
-            String mError;
+            String mErrorMessage;
             Question[] mQuestions;
 
-            Result(String error) {
-                mError = error;
+            Result(String errorMessage) {
+                mErrorMessage = errorMessage;
             }
 
             Result(Question[] questions) {
@@ -106,11 +114,11 @@ public class QuestionService extends Service {
 
         @Override
         protected void onPostExecute(Result result) {
-            mService.get().mError = result.mError;
-            mService.get().mQuestions = result.mQuestions;
-
-            // Send a broadcast indicating that loading was complete
-            mService.get().sendBroadcast(new Intent(LOADED));
+            QuestionService service = mService.get();
+            service.mLoaded = true;
+            service.mErrorMessage = result.mErrorMessage;
+            service.mQuestions = result.mQuestions;
+            service.sendBroadcast(new Intent(LOADED));
         }
     }
 

@@ -15,14 +15,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     /**
      * Set the binder for retrieving question data
-     *
-     * If the binder is valid, indicate that the data set has changed.
      */
     void setBinder(QuestionService.LocalBinder binder) {
         mBinder = binder;
-        if (mBinder != null) {
-            notifyDataSetChanged();
-        }
+        notifyDataSetChanged();
     }
 
     /**

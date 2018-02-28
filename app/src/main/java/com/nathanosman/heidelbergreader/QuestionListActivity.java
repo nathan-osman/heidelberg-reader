@@ -22,18 +22,37 @@ import android.support.v7.widget.Toolbar;
 public class QuestionListActivity extends AppCompatActivity {
 
     private QuestionAdapter mAdapter = new QuestionAdapter();
+    private QuestionService.LocalBinder mBinder;
+
+    /**
+     * Conditionally assign the binder to the adapter
+     */
+    private void assignBinder() {
+        if (mBinder != null && mBinder.isLoaded()) {
+            String errorMessage = mBinder.getErrorMessage();
+            if (errorMessage != null) {
+                mAdapter.setBinder(mBinder);
+            } else {
+                // TODO: show error message
+            }
+        } else {
+            mAdapter.setBinder(null);
+        }
+    }
 
     // Bind the adapter to the service while the activity is running
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mAdapter.setBinder((QuestionService.LocalBinder) service);
+            mBinder = (QuestionService.LocalBinder) service;
+            assignBinder();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mAdapter.setBinder(null);
+            mBinder = null;
+            assignBinder();
         }
     };
 
@@ -42,7 +61,7 @@ public class QuestionListActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            mAdapter.notifyDataSetChanged();
+            assignBinder();
         }
     };
 
