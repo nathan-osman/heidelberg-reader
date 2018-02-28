@@ -49,11 +49,12 @@ public class QuestionDetailFragment extends Fragment {
             Activity activity = getActivity();
             CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
-                appBarLayout.setTitle(question.getQuestion());
+                appBarLayout.setTitle(getActivity().getString(R.string.adapter_question_number, question.getNumber()));
             }
 
             // Show the question content
-            ((TextView) getActivity().findViewById(R.id.question_detail)).setText(question.getAnswer());
+            ((TextView) getActivity().findViewById(R.id.question_detail_question)).setText(question.getQuestion());
+            ((TextView) getActivity().findViewById(R.id.question_detail_answer)).setText(question.getAnswer());
         }
 
         // We're done, unbind from the service

@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
@@ -100,6 +101,10 @@ public class QuestionListActivity extends AppCompatActivity {
         // Assign the adapter to the recycler view
         RecyclerView recyclerView = findViewById(R.id.question_list);
         recyclerView.setAdapter(mAdapter);
+
+        // Add dividers
+        DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        recyclerView.addItemDecoration(decoration);
     }
 
     @Override
