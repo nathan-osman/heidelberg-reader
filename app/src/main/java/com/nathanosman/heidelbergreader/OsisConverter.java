@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -101,18 +102,23 @@ class OsisConverter {
 
         // Split into [book]:*
         String[] bookSplit = reference.trim().split("\\s");
-        if (bookSplit.length != 2) {
+        if (bookSplit.length < 2) {
             return null;
         }
 
-        // Lookup the book
-        String bookName = sConversion.get(bookSplit[0]);
+        // Concatenate all but the last segment to form the book name
+        String bookName = sConversion.get(
+                TextUtils.join(
+                    " ",
+                    Arrays.copyOfRange(bookSplit, 0, bookSplit.length - 1)
+                )
+        );
         if (bookName == null) {
             return null;
         }
 
         // Split numbers into [chapter]:[verse(s)]
-        String[] numericalSplit = bookSplit[1].split(":");
+        String[] numericalSplit = bookSplit[bookSplit.length - 1].split(":");
         if (numericalSplit.length != 2) {
             return null;
         }
