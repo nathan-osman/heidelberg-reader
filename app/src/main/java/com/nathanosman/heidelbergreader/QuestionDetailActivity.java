@@ -1,7 +1,10 @@
 package com.nathanosman.heidelbergreader;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
@@ -17,6 +20,12 @@ public class QuestionDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_detail);
+
+        // Load the typeface for the action bar
+        Typeface garamond = ResourcesCompat.getFont(this, R.font.eb_garamond);
+        CollapsingToolbarLayout layout = findViewById(R.id.toolbar_layout);
+        layout.setCollapsedTitleTypeface(garamond);
+        layout.setExpandedTitleTypeface(garamond);
 
         Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);

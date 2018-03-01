@@ -28,6 +28,7 @@
     <!-- Custom style for action bar title -->
     <style name="AppTheme.TitleTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:fontFamily">@font/eb_garamond</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
 </resources>
