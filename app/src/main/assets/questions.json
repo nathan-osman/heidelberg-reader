@@ -53,5 +53,40 @@
             "Genesis 1:31",
             "Ephesians 4:24"
         ]
+    },
+    {
+        "number": 7,
+        "question": "Whence then comes this depraved nature of man?",
+        "answer": "From the fall and disobedience of our first parents, Adam and Eve, in Paradise, whereby our nature became so corrupt, that we are all conceived and born in sin.",
+        "references": [
+            "Romans 5:12",
+            "Psalm 51:5"
+        ]
+    },
+    {
+        "number": 8,
+        "question": "But are we so far depraved, that we are wholly unapt to any good and prone to all evil?",
+        "answer": "Yes; unless we are born again by the Spirit of God.",
+        "references": [
+            "Genesis 8:21",
+            "2 Corinthians 3:5"
+        ]
+    },
+    {
+        "number": 9,
+        "question": "Does not God then wrong man, by requiring of Him in His Law that which he cannot perform?",
+        "answer": "No: for God so made man, that he could perform it; but man, through the instigation of the Devil, by wilful disobedience deprived himself and all his posterity of this power.",
+        "references": [
+            "Genesis 3:6"
+        ]
+    },
+    {
+        "number": 10,
+        "question": "Will God suffer such disobedience and apostasy to go unpunished?",
+        "answer": "By no means; but He is terribly displeased with our inborn as well as actual sins, and will punish them in just judgment in time and eternity, as He has declared: Cursed is every one that continueth not in all things which are written in the book of the law, to do them.",
+        "references": [
+            "Genesis 2:17",
+            "Hebrews 10:31"
+        ]
     }
 ]
