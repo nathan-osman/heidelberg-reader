@@ -173,5 +173,58 @@
         "references": [
             "John 3:16,36"
         ]
+    },
+    {
+        "number": 21,
+        "question": "What is true faith?",
+        "answer": "It is not only a certain knowledge, whereby I hold for truth all that God has revealed to us in His word; but also a hearty trust, which the Holy Ghost works in me by the Gospel, that not only to others, but to me also, forgiveness of sins, everlasting righteousness and salvation, are freely given by God, merely of grace, for the sake of Christ's merits.",
+        "references": [
+            "Hebrews 11:1",
+            "Ephesians 3:12",
+            "Ephesians 2:8-9"
+        ]
+    },
+    {
+        "number": 22,
+        "question": "What is then necessary for a Christian to believe?",
+        "answer": "All that is promised us in the Gospel, which the articles of our catholic, undoubted Christian faith teach us in sum.",
+        "references": [
+            "Acts 24:14"
+        ]
+    },
+    {
+        "number": 23,
+        "question": "What are these Articles?",
+        "answer": "I believe in God the Father Almighty, Maker of heaven and earth.\n\nAnd in Jesus Christ, His only begotten Son, our Lord: who was conceived by the Holy Ghost, born of the Virgin Mary; suffered under Pontius Pilate, was crucified, dead and buried; He descended into hell; the third day He rose from the dead; He ascended into heaven, and sitteth at the right hand of God the Father Almighty; from thence he shall come to judge the quick and the dead.\n\nI believe in the Holy Ghost; the Holy Catholic Church; the communion of saints; the forgiveness of sins; the resurrection of the body, and the life everlasting.",
+        "references": []
+    },
+    {
+        "number": 24,
+        "question": "How are these Articles divided?",
+        "answer": "Into three parts: the first is of God the Father, and our creation; the second, of God the Son, and our redemption; the third, of God the Holy Ghost, and our sanctification.",
+        "references": [
+            "1 Peter 1:2"
+        ]
+    },
+    {
+        "number": 25,
+        "question": "Since there is but one Divine Being, why speakest thou of three, Father, Son and Holy Ghost?",
+        "answer": "Because God has so revealed Himself in His word, that these three distinct Persons are the one, true, eternal God.",
+        "references": [
+            "Deuteronomy 6:4",
+            "Matthew 28:19",
+            "2 Corinthians 13:14"
+        ]
+    },
+    {
+        "number": 26,
+        "question": "What dost thou believe when thou sayest: I Believe in God the Father Almighty, Maker of heaven and earth?",
+        "answer": "That the eternal Father of our Lord Jesus Christ, who of nothing made heaven and earth, with all that in them is, who likewise upholds and governs the same by His eternal counsel and providence, is for the sake of Christ His Son my God and my Father; in whom I so trust, as to have no doubt that He will provide me with all things necessary for body and soul; and further, that whatever evil He sends upon me in this vale of tears He will turn to my good; for He is able to do it, being Almighty God, and willing also, being a faithful Father.",
+        "references": [
+            "Ephesians 1:3",
+            "Exodus 20:11",
+            "Psalm 23:1-2",
+            "Psalm 115:3"
+        ]
     }
 ]
