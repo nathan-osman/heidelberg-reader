@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Heidelberg Reader</string>
 
-    <string name="title_activity_about">About</string>
     <string name="title_question_detail">Question Detail</string>
 
     <string name="adapter_question_number">Question %1$d</string>
@@ -10,4 +9,11 @@
     <string name="activity_detail_references_instructions">(tap to open)</string>
 
     <string name="action_about">About</string>
+
+    <!-- About activity -->
+    <string name="about_activity_title">About</string>
+    <string name="about_title">Heidelberg Reader</string>
+    <string name="about_app_copyright">Copyright 2018 - Nathan Osman</string>
+    <string name="about_book_copyright">Heidelberg Catechism\nText of Tercentenary Edition\n\nCleveland, O.\nPublishing House of the Reformed Church,\n1134–1138 Pearl Street.\n\nEntered, according to Act of Congress, in the year 1877,\nby the German Publishing House of the Reformed Church, in Cleveland, O.,\nin the Office of the Librarian of Congress, at WASHINGTON</string>
+
 </resources>
