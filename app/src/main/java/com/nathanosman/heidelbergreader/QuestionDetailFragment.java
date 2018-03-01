@@ -1,6 +1,7 @@
 package com.nathanosman.heidelbergreader;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -36,21 +37,63 @@ public class QuestionDetailFragment extends Fragment {
     public QuestionDetailFragment() {
     }
 
+    /**
+     * Attempt to open YouVersion to the specified reference
+     * @param reference reference to open in the app
+     * @return true if YouVersion was launched without error
+     */
+    private boolean launchYouVersion(String reference) {
+
+        // Attempt to convert the reference to OSIS format
+        String osisRef = OsisConverter.convert(reference);
+        if (osisRef == null) {
+            return false;
+        }
+
+        // Build the URI for opening YouVersion
+        Uri osisUri = new Uri.Builder()
+                .scheme("youversion")
+                .authority("bible")
+                .appendQueryParameter("reference", osisRef)
+                .build();
+
+        // Attempt to launch the intent
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, osisUri));
+        } catch (ActivityNotFoundException e) {
+            return false;
+        }
+
+        // Success!
+        return true;
+    }
+
+    /**
+     * Open Bible Gateway to a passage
+     * @param reference reference to display
+     */
+    private void launchBibleGateway(String reference) {
+
+        // Build the URL for showing the passage
+        Uri refUri = new Uri.Builder()
+                .scheme("http")
+                .authority("www.biblegateway.com")
+                .appendPath("passage")
+                .appendQueryParameter("search", reference)
+                .build();
+
+        // Launch an activity to show the reference
+        startActivity(new Intent(Intent.ACTION_VIEW, refUri));
+    }
+
     public View.OnClickListener mOnClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View view) {
-
-            // Build the URL for showing the passage
-            Uri refUri = new Uri.Builder()
-                    .scheme("http")
-                    .authority("www.biblegateway.com")
-                    .appendPath("passage")
-                    .appendQueryParameter("search", (String) view.getTag())
-                    .build();
-
-            // Launch an activity to show the reference
-            startActivity(new Intent(Intent.ACTION_VIEW, refUri));
+            String reference = (String) view.getTag();
+            if (!launchYouVersion(reference)) {
+                launchBibleGateway(reference);
+            }
         }
     };
 
