@@ -14,6 +14,9 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
+        // Load the typeface for the action bar
+        Util.applyTypeface(this, R.font.eb_garamond, R.id.toolbar_layout);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

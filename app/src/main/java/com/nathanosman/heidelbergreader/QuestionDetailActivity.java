@@ -22,10 +22,7 @@ public class QuestionDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_question_detail);
 
         // Load the typeface for the action bar
-        Typeface garamond = ResourcesCompat.getFont(this, R.font.eb_garamond);
-        CollapsingToolbarLayout layout = findViewById(R.id.toolbar_layout);
-        layout.setCollapsedTitleTypeface(garamond);
-        layout.setExpandedTitleTypeface(garamond);
+        Util.applyTypeface(this, R.font.eb_garamond, R.id.toolbar_layout);
 
         Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
