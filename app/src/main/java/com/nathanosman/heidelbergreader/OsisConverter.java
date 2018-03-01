@@ -1,6 +1,12 @@
 package com.nathanosman.heidelbergreader;
 
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -82,5 +88,68 @@ class OsisConverter {
         sConversion.put("3 John", "3JN");
         sConversion.put("Jude", "JUD");
         sConversion.put("Revelation", "REV");
+    }
+
+    /**
+     * Convert a reference to OSIS
+     * @param reference text reference
+     * @return OSIS equivalent for the reference or null
+     */
+    @Nullable static String convert(String reference) {
+
+        List<String> osisReferences = new ArrayList<>();
+
+        // Split into [book]:*
+        String[] bookSplit = reference.trim().split("\\s");
+        if (bookSplit.length != 2) {
+            return null;
+        }
+
+        // Lookup the book
+        String bookName = sConversion.get(bookSplit[0]);
+        if (bookName == null) {
+            return null;
+        }
+
+        // Split numbers into [chapter]:[verse(s)]
+        String[] numericalSplit = bookSplit[1].split(":");
+        if (numericalSplit.length != 2) {
+            return null;
+        }
+        String chapter = numericalSplit[0];
+
+        // Split the verses into a comma-separated list
+        for (String verseRange : numericalSplit[1].split(",")) {
+
+            // Each range consists of a start and (optional) finish
+            String[] rangeSplit = verseRange.split("-");
+            if (rangeSplit.length > 2) {
+                return null;
+            }
+
+            // Parse the start and end points
+            int start, end;
+            try {
+                start = Integer.parseInt(rangeSplit[0]);
+                end = rangeSplit.length == 2 ? Integer.parseInt(rangeSplit[1]) : start;
+            } catch (NumberFormatException e) {
+                return null;
+            }
+
+            // Ensure that end is greater or equal to the start verse
+            if (end < start) {
+                return null;
+            }
+
+            // Add each verse in the range
+            for (int i = start; i <= end; i++) {
+                osisReferences.add(
+                        String.format(Locale.getDefault(), "%s.%s.%d", bookName, chapter, i)
+                );
+            }
+        }
+
+        // Concatenate the list
+        return TextUtils.join("+", osisReferences);
     }
 }
