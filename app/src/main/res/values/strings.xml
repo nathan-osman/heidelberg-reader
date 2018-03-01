@@ -4,4 +4,7 @@
     <string name="title_question_detail">Question Detail</string>
 
     <string name="adapter_question_number">Question %1$d</string>
+
+    <string name="activity_detail_references">References</string>
+    <string name="activity_detail_references_instructions">(tap to open)</string>
 </resources>

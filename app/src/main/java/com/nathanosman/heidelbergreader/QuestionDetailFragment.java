@@ -7,13 +7,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.IBinder;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -30,6 +35,24 @@ public class QuestionDetailFragment extends Fragment {
      */
     public QuestionDetailFragment() {
     }
+
+    public View.OnClickListener mOnClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+
+            // Build the URL for showing the passage
+            Uri refUri = new Uri.Builder()
+                    .scheme("http")
+                    .authority("www.biblegateway.com")
+                    .appendPath("passage")
+                    .appendQueryParameter("search", (String) view.getTag())
+                    .build();
+
+            // Launch an activity to show the reference
+            startActivity(new Intent(Intent.ACTION_VIEW, refUri));
+        }
+    };
 
     /**
      * Load question from the binder
@@ -55,6 +78,26 @@ public class QuestionDetailFragment extends Fragment {
             // Show the question content
             ((TextView) getActivity().findViewById(R.id.question_detail_question)).setText(question.getQuestion());
             ((TextView) getActivity().findViewById(R.id.question_detail_answer)).setText(question.getAnswer());
+
+            // Find the layout containing the content
+            LinearLayout layout = getActivity().findViewById(R.id.question_detail_layout);
+            int padding = getActivity().getResources().getDimensionPixelSize(R.dimen.text_margin);
+
+            // Create a text view for each of the references
+            for (String reference : question.getReferences()) {
+                TextView refView = new TextView(getActivity());
+                refView.setTag(reference);
+                refView.setOnClickListener(mOnClickListener);
+                refView.setPadding(padding, 0, padding, padding);
+                refView.setPaintFlags(refView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                refView.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                refView.setTextSize(
+                        TypedValue.COMPLEX_UNIT_PX,
+                        getActivity().getResources().getDimension(R.dimen.reference_size)
+                );
+                refView.setText(reference);
+                layout.addView(refView);
+            }
         }
 
         // We're done, unbind from the service
