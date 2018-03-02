@@ -10,6 +10,9 @@
 
     <string name="action_about">About</string>
 
+    <!-- List Activity -->
+    <string name="list_error_message">An error occurred while loading the questions: %1$s</string>
+
     <!-- About activity -->
     <string name="about_activity_title">About</string>
     <string name="about_title">Heidelberg Reader</string>

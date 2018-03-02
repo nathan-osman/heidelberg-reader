@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 /**
  * Display a list of questions
@@ -20,6 +22,8 @@ import android.view.MenuItem;
 public class QuestionListActivity extends AppCompatActivity {
 
     private boolean mTwoPane;
+
+    private QuestionAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,22 @@ public class QuestionListActivity extends AppCompatActivity {
         }
 
         // Create the adapter
-        QuestionAdapter adapter = new QuestionAdapter(this, new QuestionAdapter.Listener() {
+        mAdapter = new QuestionAdapter(this, new QuestionAdapter.Listener() {
+
+            @Override
+            public void onLoaded() {
+
+                // Hide the spinner
+                findViewById(R.id.progress).setVisibility(View.GONE);
+
+                // Display an error message if applicable
+                String errorMessage = mAdapter.getErrorMessage();
+                if (errorMessage != null) {
+                    TextView errorView = findViewById(R.id.error_message);
+                    errorView.setText(getString(R.string.list_error_message, errorMessage));
+                    errorView.setVisibility(View.VISIBLE);
+                }
+            }
 
             @Override
             public void onNavigate(Question question) {
@@ -65,7 +84,7 @@ public class QuestionListActivity extends AppCompatActivity {
 
         // Assign the adapter to the recycler view
         RecyclerView recyclerView = findViewById(R.id.question_list);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
 
         // Add dividers
         DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
