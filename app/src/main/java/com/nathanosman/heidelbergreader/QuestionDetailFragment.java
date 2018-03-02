@@ -111,7 +111,7 @@ public class QuestionDetailFragment extends Fragment {
         // Show the question title
         CollapsingToolbarLayout appBarLayout = getActivity().findViewById(R.id.toolbar_layout);
         if (appBarLayout != null) {
-            appBarLayout.setTitle(getActivity().getString(R.string.adapter_question_number, question.getNumber()));
+            appBarLayout.setTitle(getActivity().getString(R.string.list_question_number, question.getNumber()));
         }
 
         // Show the question content

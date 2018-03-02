@@ -168,7 +168,7 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
         Question question = mQuestions[position];
 
         // Populate the view holder with the question data
-        holder.mNumber.setText(mContext.getString(R.string.adapter_question_number, question.getNumber()));
+        holder.mNumber.setText(mContext.getString(R.string.list_question_number, question.getNumber()));
         holder.mTitle.setText(question.getQuestion());
         holder.mSummary.setText(question.getAnswer());
 

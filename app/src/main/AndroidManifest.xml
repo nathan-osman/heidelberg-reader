@@ -25,7 +25,6 @@
         <!-- Question detail activity -->
         <activity
             android:name=".QuestionDetailActivity"
-            android:label="@string/title_question_detail"
             android:parentActivityName=".QuestionListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

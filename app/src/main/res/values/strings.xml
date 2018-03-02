@@ -1,17 +1,16 @@
 <resources>
     <string name="app_name">Heidelberg Reader</string>
 
-    <string name="title_question_detail">Question Detail</string>
-
-    <string name="adapter_question_number">Question %1$d</string>
-
-    <string name="activity_detail_references">References</string>
-    <string name="activity_detail_references_instructions">(tap to open)</string>
-
+    <!-- Menu items -->
     <string name="action_about">About</string>
 
     <!-- List Activity -->
     <string name="list_error_message">An error occurred while loading the questions: %1$s</string>
+    <string name="list_question_number">Question %1$d</string>
+
+    <!-- Detail activity -->
+    <string name="detail_references">References</string>
+    <string name="detail_references_instructions">(tap to open)</string>
 
     <!-- About activity -->
     <string name="about_activity_title">About</string>
