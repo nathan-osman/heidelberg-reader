@@ -8,6 +8,8 @@
         android:id="@+id/question_list_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
         android:layout_marginTop="@dimen/text_margin"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -16,6 +18,8 @@
         android:ellipsize="end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -25,6 +29,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/text_margin"
+        android:layout_marginLeft="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
         android:maxLines="1"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

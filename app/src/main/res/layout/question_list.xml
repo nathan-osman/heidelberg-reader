@@ -6,8 +6,6 @@
     android:name="com.nathanosman.heidelbergreader.QuestionListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="com.nathanosman.heidelbergreader.QuestionListActivity"
     tools:listitem="@layout/question_list_content" />
