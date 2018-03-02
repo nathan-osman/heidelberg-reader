@@ -32,12 +32,16 @@ public class QuestionDetailActivity extends AppCompatActivity {
 
         // Create the fragment for displaying question data if it does not exist
         if (savedInstanceState == null &&
-                getIntent().hasExtra(QuestionDetailFragment.ARG_QUESTION_INDEX)) {
+                getIntent().hasExtra(QuestionDetailFragment.ARG_QUESTION)) {
+
+            // Create a bundle with the question passed as an argument
             Bundle arguments = new Bundle();
-            arguments.putInt(
-                    QuestionDetailFragment.ARG_QUESTION_INDEX,
-                    getIntent().getIntExtra(QuestionDetailFragment.ARG_QUESTION_INDEX, 0)
+            arguments.putParcelable(
+                    QuestionDetailFragment.ARG_QUESTION,
+                    getIntent().getParcelableExtra(QuestionDetailFragment.ARG_QUESTION)
             );
+
+            // Create the fragment for the question and inject it into the activity
             QuestionDetailFragment fragment = new QuestionDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager()

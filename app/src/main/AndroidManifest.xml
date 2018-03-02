@@ -43,12 +43,6 @@
                 android:value="com.nathanosman.heidelbergreader.QuestionListActivity" />
         </activity>
 
-        <!-- Question service -->
-        <service
-            android:name=".QuestionService"
-            android:enabled="true"
-            android:exported="false" />
-
     </application>
 
 </manifest>

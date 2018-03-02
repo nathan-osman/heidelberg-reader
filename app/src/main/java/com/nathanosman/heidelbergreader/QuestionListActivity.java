@@ -1,13 +1,7 @@
 package com.nathanosman.heidelbergreader;
 
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
@@ -27,50 +21,6 @@ public class QuestionListActivity extends AppCompatActivity {
 
     private boolean mTwoPane;
 
-    private QuestionAdapter mAdapter;
-    private QuestionService.LocalBinder mBinder;
-
-    /**
-     * Conditionally assign the binder to the adapter
-     */
-    private void assignBinder() {
-        if (mBinder != null && mBinder.isLoaded()) {
-            String errorMessage = mBinder.getErrorMessage();
-            if (errorMessage == null) {
-                mAdapter.setBinder(mBinder);
-            } else {
-                // TODO show error message
-            }
-        } else {
-            mAdapter.setBinder(null);
-        }
-    }
-
-    // Bind the adapter to the service while the activity is running
-    private ServiceConnection mConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mBinder = (QuestionService.LocalBinder) service;
-            assignBinder();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            mBinder = null;
-            assignBinder();
-        }
-    };
-
-    // Listen for broadcasts from the service while the activity is running
-    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            assignBinder();
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,22 +37,27 @@ public class QuestionListActivity extends AppCompatActivity {
         }
 
         // Create the adapter
-        mAdapter = new QuestionAdapter(this, new QuestionAdapter.Listener() {
+        QuestionAdapter adapter = new QuestionAdapter(this, new QuestionAdapter.Listener() {
 
             @Override
-            public void onNavigate(int index) {
+            public void onNavigate(Question question) {
                 if (mTwoPane) {
+
+                    // Create a bundle with the question passed as an argument
                     Bundle arguments = new Bundle();
-                    arguments.putInt(QuestionDetailFragment.ARG_QUESTION_INDEX, index);
+                    arguments.putParcelable(QuestionDetailFragment.ARG_QUESTION, question);
+
+                    // Create the fragment for the question and inject it into the activity
                     QuestionDetailFragment fragment = new QuestionDetailFragment();
                     fragment.setArguments(arguments);
                     getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.question_detail_container, fragment)
                             .commit();
+
                 } else {
                     Intent intent = new Intent(QuestionListActivity.this, QuestionDetailActivity.class);
-                    intent.putExtra(QuestionDetailFragment.ARG_QUESTION_INDEX, index);
+                    intent.putExtra(QuestionDetailFragment.ARG_QUESTION, question);
                     startActivity(intent);
                 }
             }
@@ -110,35 +65,11 @@ public class QuestionListActivity extends AppCompatActivity {
 
         // Assign the adapter to the recycler view
         RecyclerView recyclerView = findViewById(R.id.question_list);
-        recyclerView.setAdapter(mAdapter);
+        recyclerView.setAdapter(adapter);
 
         // Add dividers
         DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(decoration);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Start listening for broadcasts
-        IntentFilter filter = new IntentFilter(QuestionService.LOADED);
-        registerReceiver(mReceiver, filter);
-
-        // Bind to the service
-        Intent intent = new Intent(this, QuestionService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        // Unbind from the service
-        unbindService(mConnection);
-
-        // Stop listening for broadcasts
-        unregisterReceiver(mReceiver);
     }
 
     @Override
