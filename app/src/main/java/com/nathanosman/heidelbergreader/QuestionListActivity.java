@@ -19,7 +19,8 @@ import android.widget.TextView;
  * smaller screens. For larger devices, the detail fragment is shown in this activity. This
  * activity binds to the question service as long as it is active.
  */
-public class QuestionListActivity extends AppCompatActivity {
+public class QuestionListActivity extends AppCompatActivity
+        implements SearchDialogFragment.Listener {
 
     private boolean mTwoPane;
 
@@ -101,10 +102,20 @@ public class QuestionListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_search:
+                SearchDialogFragment dialog = new SearchDialogFragment();
+                dialog.show(getSupportFragmentManager(), "search");
+                return true;
             case R.id.action_about:
                 startActivity(new Intent(this, AboutActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSearch(String query) {
+        //...
     }
 }

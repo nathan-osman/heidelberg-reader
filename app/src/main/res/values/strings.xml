@@ -19,4 +19,10 @@
     <string name="about_app_copyright">Copyright 2018 - Nathan Osman</string>
     <string name="about_book_copyright">Heidelberg Catechism\nText of Tercentenary Edition\n\nCleveland, O.\nPublishing House of the Reformed Church,\n1134–1138 Pearl Street.\n\nEntered, according to Act of Congress, in the year 1877,\nby the German Publishing House of the Reformed Church, in Cleveland, O.,\nin the Office of the Librarian of Congress, at WASHINGTON</string>
 
+    <!-- Search dialog fragment -->
+    <string name="search_dialog_title">Search</string>
+    <string name="search_dialog_hint">text to search for</string>
+    <string name="search_dialog_ok">OK</string>
+    <string name="search_dialog_cancel">Cancel</string>
+
 </resources>
