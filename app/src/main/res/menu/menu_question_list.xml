@@ -4,8 +4,17 @@
     tools:context="com.nathanosman.heidelbergreader.QuestionListActivity">
 
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="200"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom"
+        />
+
+    <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
         android:title="@string/action_about"
         app:showAsAction="never" />
+
 </menu>
