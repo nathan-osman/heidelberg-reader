@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:hint="@string/search_dialog_hint" />
+        android:hint="@string/search_dialog_hint"
+        android:theme="@style/AppTheme.EditText" />
 
 </LinearLayout>

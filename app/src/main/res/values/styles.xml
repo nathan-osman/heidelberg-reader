@@ -9,6 +9,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!-- Override the default font -->
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
         <item name="android:textViewStyle">@style/AppTheme.TextView</item>
     </style>
 
@@ -21,7 +22,16 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- Custom style for text views -->
+    <!-- Custom style for controls -->
+
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">@font/eb_garamond</item>
+    </style>
+
+    <style name="AppTheme.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/eb_garamond</item>
+    </style>
+
     <style name="AppTheme.TextView" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/eb_garamond</item>
     </style>
