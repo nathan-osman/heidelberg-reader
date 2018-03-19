@@ -22,7 +22,8 @@ import android.widget.TextView;
 public class QuestionListActivity extends AppCompatActivity implements
         QuestionAdapter.Listener,
         QuestionLoaderTask.Listener,
-        SearchDialogFragment.Listener {
+        SearchDialogFragment.Listener,
+        SearchTask.Listener {
 
     private boolean mTwoPane;
 
@@ -72,14 +73,14 @@ public class QuestionListActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onError(String message) {
+    public void onLoadError(String message) {
         TextView errorView = findViewById(R.id.error_message);
         errorView.setText(getString(R.string.list_error_message, message));
         errorView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onLoaded(Question[] questions) {
+    public void onLoadSucceeded(Question[] questions) {
 
         // Hold a reference to the questions and enable the search option
         mQuestions = questions;
@@ -105,7 +106,7 @@ public class QuestionListActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFinished() {
+    public void onLoadFinished() {
         findViewById(R.id.progress).setVisibility(View.GONE);
     }
 
@@ -134,6 +135,14 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     @Override
     public void onSearch(String query) {
+        new SearchTask(
+                this,
+                new SearchTask.Parameters(mQuestions, query)
+        ).execute();
+    }
+
+    @Override
+    public void onSearchResults(Question[] questions) {
         //...
     }
 }

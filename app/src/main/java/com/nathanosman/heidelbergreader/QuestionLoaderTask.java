@@ -19,15 +19,15 @@ import java.lang.reflect.Type;
 public class QuestionLoaderTask extends AsyncTask<Void, Void, QuestionLoaderTask.Result> {
 
     interface Listener {
-        void onError(String message);
-        void onLoaded(Question[] questions);
-        void onFinished();
+        void onLoadError(String message);
+        void onLoadSucceeded(Question[] questions);
+        void onLoadFinished();
     }
 
     /**
      * Result from the load operation
      */
-    class Result {
+    static class Result {
 
         String mErrorMessage;
         Question[] mQuestions;
@@ -73,10 +73,10 @@ public class QuestionLoaderTask extends AsyncTask<Void, Void, QuestionLoaderTask
     @Override
     protected void onPostExecute(Result result) {
         if (result.mErrorMessage != null) {
-            mListener.onError(result.mErrorMessage);
+            mListener.onLoadError(result.mErrorMessage);
         } else {
-            mListener.onLoaded(result.mQuestions);
+            mListener.onLoadSucceeded(result.mQuestions);
         }
-        mListener.onFinished();
+        mListener.onLoadFinished();
     }
 }
