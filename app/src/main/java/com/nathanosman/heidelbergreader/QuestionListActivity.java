@@ -19,14 +19,14 @@ import android.widget.TextView;
  * smaller screens. For larger devices, the detail fragment is shown in this activity. This
  * activity binds to the question service as long as it is active.
  */
-public class QuestionListActivity extends AppCompatActivity
-        implements QuestionAdapter.Listener, SearchDialogFragment.Listener {
+public class QuestionListActivity extends AppCompatActivity implements
+        QuestionAdapter.Listener,
+        QuestionLoaderTask.Listener,
+        SearchDialogFragment.Listener {
 
     private boolean mTwoPane;
 
     private Question[] mQuestions;
-    private QuestionAdapter mAdapter;
-
     private Menu mActions;
 
     @Override
@@ -45,47 +45,7 @@ public class QuestionListActivity extends AppCompatActivity
         }
 
         // Create a task to load the questions
-        new QuestionLoaderTask(this, new QuestionLoaderTask.Listener() {
-
-            @Override
-            public void onError(String message) {
-                TextView errorView = findViewById(R.id.error_message);
-                errorView.setText(getString(R.string.list_error_message, message));
-                errorView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onLoaded(Question[] questions) {
-
-                // Hold a reference to the questions and enable the search option
-                mQuestions = questions;
-                mActions.findItem(R.id.action_search).setVisible(true);
-
-                // Create the adapter
-                mAdapter = new QuestionAdapter(
-                        QuestionListActivity.this,
-                        QuestionListActivity.this,
-                        questions
-                );
-
-                // Assign the adapter to the recycler view
-                RecyclerView recyclerView = findViewById(R.id.question_list);
-                recyclerView.setAdapter(mAdapter);
-
-                // Add dividers
-                DividerItemDecoration decoration = new DividerItemDecoration(
-                        QuestionListActivity.this,
-                        DividerItemDecoration.VERTICAL
-                );
-                recyclerView.addItemDecoration(decoration);
-            }
-
-            @Override
-            public void onFinished() {
-                findViewById(R.id.progress).setVisibility(View.GONE);
-            }
-
-        }).execute();
+        new QuestionLoaderTask(this, this).execute();
     }
 
     @Override
@@ -109,6 +69,44 @@ public class QuestionListActivity extends AppCompatActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onError(String message) {
+        TextView errorView = findViewById(R.id.error_message);
+        errorView.setText(getString(R.string.list_error_message, message));
+        errorView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onLoaded(Question[] questions) {
+
+        // Hold a reference to the questions and enable the search option
+        mQuestions = questions;
+        mActions.findItem(R.id.action_search).setVisible(true);
+
+        // Create the adapter
+        QuestionAdapter adapter = new QuestionAdapter(
+                QuestionListActivity.this,
+                QuestionListActivity.this,
+                questions
+        );
+
+        // Assign the adapter to the recycler view
+        RecyclerView recyclerView = findViewById(R.id.question_list);
+        recyclerView.setAdapter(adapter);
+
+        // Add dividers
+        DividerItemDecoration decoration = new DividerItemDecoration(
+                QuestionListActivity.this,
+                DividerItemDecoration.VERTICAL
+        );
+        recyclerView.addItemDecoration(decoration);
+    }
+
+    @Override
+    public void onFinished() {
+        findViewById(R.id.progress).setVisibility(View.GONE);
     }
 
     @Override
