@@ -24,7 +24,10 @@ public class QuestionListActivity extends AppCompatActivity
 
     private boolean mTwoPane;
 
+    private Question[] mQuestions;
     private QuestionAdapter mAdapter;
+
+    private Menu mActions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,10 @@ public class QuestionListActivity extends AppCompatActivity
 
             @Override
             public void onLoaded(Question[] questions) {
+
+                // Hold a reference to the questions and enable the search option
+                mQuestions = questions;
+                mActions.findItem(R.id.action_search).setVisible(true);
 
                 // Create the adapter
                 mAdapter = new QuestionAdapter(
@@ -85,6 +92,7 @@ public class QuestionListActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_question_list, menu);
+        mActions = menu;
         return true;
     }
 
