@@ -20,7 +20,7 @@ import android.widget.TextView;
  * activity binds to the question service as long as it is active.
  */
 public class QuestionListActivity extends AppCompatActivity
-        implements SearchDialogFragment.Listener {
+        implements QuestionAdapter.Listener, SearchDialogFragment.Listener {
 
     private boolean mTwoPane;
 
@@ -41,55 +41,44 @@ public class QuestionListActivity extends AppCompatActivity
             mTwoPane = true;
         }
 
-        // Create the adapter
-        mAdapter = new QuestionAdapter(this, new QuestionAdapter.Listener() {
+        // Create a task to load the questions
+        new QuestionLoaderTask(this, new QuestionLoaderTask.Listener() {
 
             @Override
-            public void onLoaded() {
+            public void onError(String message) {
+                TextView errorView = findViewById(R.id.error_message);
+                errorView.setText(getString(R.string.list_error_message, message));
+                errorView.setVisibility(View.VISIBLE);
+            }
 
-                // Hide the spinner
+            @Override
+            public void onLoaded(Question[] questions) {
+
+                // Create the adapter
+                mAdapter = new QuestionAdapter(
+                        QuestionListActivity.this,
+                        QuestionListActivity.this,
+                        questions
+                );
+
+                // Assign the adapter to the recycler view
+                RecyclerView recyclerView = findViewById(R.id.question_list);
+                recyclerView.setAdapter(mAdapter);
+
+                // Add dividers
+                DividerItemDecoration decoration = new DividerItemDecoration(
+                        QuestionListActivity.this,
+                        DividerItemDecoration.VERTICAL
+                );
+                recyclerView.addItemDecoration(decoration);
+            }
+
+            @Override
+            public void onFinished() {
                 findViewById(R.id.progress).setVisibility(View.GONE);
-
-                // Display an error message if applicable
-                String errorMessage = mAdapter.getErrorMessage();
-                if (errorMessage != null) {
-                    TextView errorView = findViewById(R.id.error_message);
-                    errorView.setText(getString(R.string.list_error_message, errorMessage));
-                    errorView.setVisibility(View.VISIBLE);
-                }
             }
 
-            @Override
-            public void onNavigate(Question question) {
-                if (mTwoPane) {
-
-                    // Create a bundle with the question passed as an argument
-                    Bundle arguments = new Bundle();
-                    arguments.putParcelable(QuestionDetailFragment.ARG_QUESTION, question);
-
-                    // Create the fragment for the question and inject it into the activity
-                    QuestionDetailFragment fragment = new QuestionDetailFragment();
-                    fragment.setArguments(arguments);
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.question_detail_container, fragment)
-                            .commit();
-
-                } else {
-                    Intent intent = new Intent(QuestionListActivity.this, QuestionDetailActivity.class);
-                    intent.putExtra(QuestionDetailFragment.ARG_QUESTION, question);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        // Assign the adapter to the recycler view
-        RecyclerView recyclerView = findViewById(R.id.question_list);
-        recyclerView.setAdapter(mAdapter);
-
-        // Add dividers
-        DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        recyclerView.addItemDecoration(decoration);
+        }).execute();
     }
 
     @Override
@@ -111,6 +100,29 @@ public class QuestionListActivity extends AppCompatActivity
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onNavigate(Question question) {
+        if (mTwoPane) {
+
+            // Create a bundle with the question passed as an argument
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(QuestionDetailFragment.ARG_QUESTION, question);
+
+            // Create the fragment for the question and inject it into the activity
+            QuestionDetailFragment fragment = new QuestionDetailFragment();
+            fragment.setArguments(arguments);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.question_detail_container, fragment)
+                    .commit();
+
+        } else {
+            Intent intent = new Intent(QuestionListActivity.this, QuestionDetailActivity.class);
+            intent.putExtra(QuestionDetailFragment.ARG_QUESTION, question);
+            startActivity(intent);
         }
     }
 
