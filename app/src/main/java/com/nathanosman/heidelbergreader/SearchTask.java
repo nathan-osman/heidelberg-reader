@@ -12,6 +12,7 @@ public class SearchTask extends AsyncTask<Void, Void, SearchTask.Result> {
 
     interface Listener {
         void onSearchResults(Question[] questions);
+        void onSearchFinished();
     }
 
     /**
@@ -32,7 +33,12 @@ public class SearchTask extends AsyncTask<Void, Void, SearchTask.Result> {
      */
     static class Result {
 
+        boolean mWasCancelled;
         Question[] mQuestions;
+
+        Result() {
+            mWasCancelled = true;
+        }
 
         Result(Question[] questions) {
             mQuestions = questions;
@@ -52,6 +58,9 @@ public class SearchTask extends AsyncTask<Void, Void, SearchTask.Result> {
         String query = mParameters.mQuery;
         List<Question> matchedQuestions = new ArrayList<>();
         for (Question question : mParameters.mQuestions) {
+            if (isCancelled()) {
+                return new Result();
+            }
             if (question.getQuestion().contains(query) ||
                     question.getAnswer().contains(query)) {
                 matchedQuestions.add(question);
@@ -64,6 +73,9 @@ public class SearchTask extends AsyncTask<Void, Void, SearchTask.Result> {
 
     @Override
     protected void onPostExecute(Result result) {
-        mListener.onSearchResults(result.mQuestions);
+        if (!result.mWasCancelled) {
+            mListener.onSearchResults(result.mQuestions);
+        }
+        mListener.onSearchFinished();
     }
 }

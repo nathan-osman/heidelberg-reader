@@ -21,7 +21,6 @@ public class QuestionLoaderTask extends AsyncTask<Void, Void, QuestionLoaderTask
     interface Listener {
         void onLoadError(String message);
         void onLoadSucceeded(Question[] questions);
-        void onLoadFinished();
     }
 
     /**
@@ -77,6 +76,5 @@ public class QuestionLoaderTask extends AsyncTask<Void, Void, QuestionLoaderTask
         } else {
             mListener.onLoadSucceeded(result.mQuestions);
         }
-        mListener.onLoadFinished();
     }
 }

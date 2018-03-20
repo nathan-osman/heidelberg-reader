@@ -12,12 +12,9 @@
     <!-- Show two panes - one for the questions, another for the question's data -->
 
     <FrameLayout
+        android:id="@+id/question_list_container"
         android:layout_width="@dimen/item_width"
-        android:layout_height="match_parent">
-
-        <include layout="@layout/question_list" />
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
     <FrameLayout
         android:id="@+id/question_detail_container"

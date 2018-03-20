@@ -3,14 +3,10 @@ package com.nathanosman.heidelbergreader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 /**
  * Display a list of questions
@@ -20,7 +16,7 @@ import android.widget.TextView;
  * activity binds to the question service as long as it is active.
  */
 public class QuestionListActivity extends AppCompatActivity implements
-        QuestionAdapter.Listener,
+        QuestionListFragment.Listener,
         QuestionLoaderTask.Listener,
         SearchDialogFragment.Listener,
         SearchTask.Listener {
@@ -28,6 +24,8 @@ public class QuestionListActivity extends AppCompatActivity implements
     private boolean mTwoPane;
 
     private Question[] mQuestions;
+    private QuestionListFragment mFragment;
+
     private Menu mActions;
 
     @Override
@@ -45,6 +43,13 @@ public class QuestionListActivity extends AppCompatActivity implements
             mTwoPane = true;
         }
 
+        // Create the question list fragment and insert it
+        mFragment = new QuestionListFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.question_list_container, mFragment)
+                .commit();
+
         // Create a task to load the questions
         new QuestionLoaderTask(this, this).execute();
     }
@@ -53,7 +58,14 @@ public class QuestionListActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_question_list, menu);
-        mActions = menu;
+
+        // Enable the search menu item if questions are loaded
+        if (mQuestions != null) {
+            menu.findItem(R.id.action_search).setVisible(true);
+        } else {
+            mActions = menu;
+        }
+
         return true;
     }
 
@@ -74,40 +86,17 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadError(String message) {
-        TextView errorView = findViewById(R.id.error_message);
-        errorView.setText(getString(R.string.list_error_message, message));
-        errorView.setVisibility(View.VISIBLE);
+        mFragment.setMessage(message);
     }
 
     @Override
     public void onLoadSucceeded(Question[] questions) {
-
-        // Hold a reference to the questions and enable the search option
         mQuestions = questions;
-        mActions.findItem(R.id.action_search).setVisible(true);
+        mFragment.setQuestions(questions);
 
-        // Create the adapter
-        QuestionAdapter adapter = new QuestionAdapter(
-                QuestionListActivity.this,
-                QuestionListActivity.this,
-                questions
-        );
-
-        // Assign the adapter to the recycler view
-        RecyclerView recyclerView = findViewById(R.id.question_list);
-        recyclerView.setAdapter(adapter);
-
-        // Add dividers
-        DividerItemDecoration decoration = new DividerItemDecoration(
-                QuestionListActivity.this,
-                DividerItemDecoration.VERTICAL
-        );
-        recyclerView.addItemDecoration(decoration);
-    }
-
-    @Override
-    public void onLoadFinished() {
-        findViewById(R.id.progress).setVisibility(View.GONE);
+        if (mActions != null) {
+            mActions.findItem(R.id.action_search).setVisible(true);
+        }
     }
 
     @Override
@@ -143,6 +132,11 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     @Override
     public void onSearchResults(Question[] questions) {
+        //...
+    }
+
+    @Override
+    public void onSearchFinished() {
         //...
     }
 }
