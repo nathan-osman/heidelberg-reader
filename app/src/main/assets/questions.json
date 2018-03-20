@@ -483,5 +483,51 @@
             "1 John 1:3",
             "1 Peter 4:10"
         ]
+    },
+    {
+        "number": 56,
+        "question": "What dost thou believe concerning the forgiveness of sins?",
+        "answer": "That God, for the sake of Christ's satisfaction, will no more remember my sins, neither the sinful nature with which I have to struggle all my life long; but graciously imparts to me the righteousness of Christ, that I may nevermore come into condemnation.",
+        "references": [
+            "Ephesians 1:7",
+            "John 3:18"
+        ]
+    },
+    {
+        "number": 57,
+        "question": "What comfort does the resurrection of the body afford thee?",
+        "answer": "That not only my soul, after this life, shall be immediately taken up to Christ its Head; but also that this my body, raised by the power of Christ, shall again be united with my soul, and made like unto the glorious body of Christ.",
+        "references": [
+            "Luke 23:43",
+            "2 Corinthians 5:8",
+            "Philippians 3:21"
+        ]
+    },
+    {
+        "number": 58,
+        "question": "What comfort hast thou from the article of the life everlasting?",
+        "answer": "That, inasmuch as I now feel in my heart the beginning of eternal joy, I shall after this life possess complete bliss, such as eye hath not seen, nor ear heard, neither hath entered into the heart of man; therein to praise God for ever.",
+        "references": [
+            "Romans 8:23",
+            "1 Corinthians 2:9"
+        ]
+    },
+    {
+        "number": 59,
+        "question": "But what does it help thee now, that thou believest all this?",
+        "answer": "That I am righteous in Christ before God, and an heir of eternal life.",
+        "references": [
+            "Titus 3:7"
+        ]
+    },
+    {
+        "number": 60,
+        "question": "How art thou righteous before God?",
+        "answer": "Only by true faith in Jesus Christ. That is: although my conscience accuse me, that I have grievously sinned against all the commandments of God, and have never kept any of them, and that I am still prone always to all evil, yet God, without any merit of mine, of mere grace, grants and imputes to me the perfect satisfaction, righteousness and holiness of Christ, as if I had never committed nor had any sin, and had myself accomplished all the obedience which Christ has fulfilled for me, if only I accept such benefit with a believing heart.",
+        "references": [
+            "Romans 7:19",
+            "Ephesians 2:8-9",
+            "Romans 3:28"
+        ]
     }
 ]
