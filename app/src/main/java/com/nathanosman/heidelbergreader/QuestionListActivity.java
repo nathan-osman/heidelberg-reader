@@ -2,24 +2,28 @@ package com.nathanosman.heidelbergreader;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.Arrays;
+
 /**
  * Display a list of questions
  *
  * This activity shows a list of questions and launches another activity to display a question on
- * smaller screens. For larger devices, the detail fragment is shown in this activity. This
- * activity binds to the question service as long as it is active.
+ * smaller screens. For larger devices, the detail fragment is shown in this activity.
  */
 public class QuestionListActivity extends AppCompatActivity implements
         QuestionListFragment.Listener,
         QuestionLoaderTask.Listener,
         SearchDialogFragment.Listener,
         SearchTask.Listener {
+
+    private static final String ARG_QUESTIONS = "com.nathanosman.heidelbergreader.ARG_QUESTIONS";
 
     private boolean mTwoPane;
 
@@ -85,11 +89,24 @@ public class QuestionListActivity extends AppCompatActivity implements
             mTwoPane = true;
         }
 
-        // Create an empty question fragment
-        createFragmentWithExistingQuestions();
+        // If the questions were already loaded, use the stored value
+        if (savedInstanceState != null) {
+            Parcelable[] parcelable = savedInstanceState.getParcelableArray(ARG_QUESTIONS);
+            if (parcelable != null) {
+                mQuestions = Arrays.copyOf(parcelable, parcelable.length, Question[].class);
+                return;
+            }
+        }
 
-        // Create a task to load the questions
+        // Otherwise, create a new fragment and load the questions
+        createFragmentWithExistingQuestions();
         new QuestionLoaderTask(this, this).execute();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArray(ARG_QUESTIONS, mQuestions);
     }
 
     @Override
