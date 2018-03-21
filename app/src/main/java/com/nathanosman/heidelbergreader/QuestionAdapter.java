@@ -1,6 +1,7 @@
 package com.nathanosman.heidelbergreader;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +23,7 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
     private Context mContext;
     private Listener mListener;
     private Question[] mQuestions;
-
-    private View.OnClickListener mOnClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(View view) {
-            mListener.onNavigate((Question) view.getTag());
-        }
-    };
+    private int mSelectedIndex = -1;
 
     /**
      * Create a new question adapter
@@ -72,18 +66,48 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         // Retrieve the question for the specified index
-        Question question = mQuestions[position];
+        final Question question = mQuestions[position];
 
         // Populate the view holder with the question data
         holder.mNumber.setText(mContext.getString(R.string.list_question_number, question.getNumber()));
         holder.mTitle.setText(question.getQuestion());
         holder.mSummary.setText(question.getAnswer());
 
-        holder.itemView.setTag(question);
-        holder.itemView.setOnClickListener(mOnClickListener);
+        // Set the click listener for the question
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                // Grab the index of the previous selection
+                int oldSelectedIndex = mSelectedIndex;
+
+                // Set the new selection and update the item
+                mSelectedIndex = holder.getAdapterPosition();
+                notifyItemChanged(mSelectedIndex);
+
+                // If there was a previous selection, update it too
+                if (oldSelectedIndex != -1) {
+                    notifyItemChanged(oldSelectedIndex);
+                }
+
+                // Notify the listener that a question was selected
+                mListener.onNavigate(question);
+            }
+        });
+
+        // Set the background color based on whether this question is selected
+        holder.itemView.setBackgroundColor(
+                ContextCompat.getColor(
+                        mContext,
+                        position == mSelectedIndex ?
+                                R.color.colorSelected :
+                                android.R.color.transparent
+                )
+        );
     }
 
     @Override
