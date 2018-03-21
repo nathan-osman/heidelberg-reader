@@ -39,6 +39,7 @@
     <!-- Header displayed at the top of the question list -->
     <LinearLayout
         android:id="@+id/header_container"
+        android:background="@color/colorHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -81,7 +82,7 @@
         </LinearLayout>
 
         <View
-            android:background="#eeeeee"
+            android:background="#cccccc"
             android:layout_width="fill_parent"
             android:layout_height="2dip" />
 

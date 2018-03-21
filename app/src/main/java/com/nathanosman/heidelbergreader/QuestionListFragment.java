@@ -33,8 +33,8 @@ public class QuestionListFragment extends Fragment
     public static final String ARG_HEADER_TITLE = "com.nathanosman.heidelbergreader.ARG_HEADER_TITLE";
     public static final String ARG_HEADER_SUBTITLE = "com.nathanosman.heidelbergreader.ARG_HEADER_SUBTITLE";
 
-    private static final String ARG_MESSAGE = "com.nathanosman.heidelbergreader.ARG_MESSAGE";
-    private static final String ARG_QUESTIONS = "com.nathanosman.heidelbergreader.ARG_QUESTIONS";
+    public static final String ARG_MESSAGE = "com.nathanosman.heidelbergreader.ARG_MESSAGE";
+    public static final String ARG_QUESTIONS = "com.nathanosman.heidelbergreader.ARG_QUESTIONS";
 
     public interface Listener {
         void onClose();

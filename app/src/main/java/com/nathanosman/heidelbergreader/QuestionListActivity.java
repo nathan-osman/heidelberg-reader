@@ -28,17 +28,21 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     private Menu mActions;
 
+    private SearchTask mSearchTask;
+
     /**
      * Create a new fragment
      * @param progressText text shown while the spinner is displayed
      * @param progressCancel true to allow the operation to be cancelled
      * @param headerTitle title shown in the header (or null for none)
      * @param headerSubtitle subtitle shown in the header (or null for none)
+     * @param questions array of questions to initialize the fragment with
      */
     private void createFragment(String progressText,
                                 boolean progressCancel,
                                 String headerTitle,
-                                String headerSubtitle) {
+                                String headerSubtitle,
+                                Question[] questions) {
 
         // Build the arguments for the fragment
         Bundle arguments = new Bundle();
@@ -46,6 +50,7 @@ public class QuestionListActivity extends AppCompatActivity implements
         arguments.putBoolean(QuestionListFragment.ARG_PROGRESS_CANCEL, progressCancel);
         arguments.putString(QuestionListFragment.ARG_HEADER_TITLE, headerTitle);
         arguments.putString(QuestionListFragment.ARG_HEADER_SUBTITLE, headerSubtitle);
+        arguments.putParcelableArray(QuestionListFragment.ARG_QUESTIONS, questions);
 
         // Create the fragment
         mFragment = new QuestionListFragment();
@@ -56,6 +61,13 @@ public class QuestionListActivity extends AppCompatActivity implements
                 .beginTransaction()
                 .replace(R.id.question_list_container, mFragment)
                 .commit();
+    }
+
+    /**
+     * Create a fragment with the existing set of questions
+     */
+    private void createFragmentWithExistingQuestions() {
+        createFragment(null, false, null, null, mQuestions);
     }
 
     @Override
@@ -74,7 +86,7 @@ public class QuestionListActivity extends AppCompatActivity implements
         }
 
         // Create an empty question fragment
-        createFragment(null, false, null, null);
+        createFragmentWithExistingQuestions();
 
         // Create a task to load the questions
         new QuestionLoaderTask(this, this).execute();
@@ -127,12 +139,12 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     @Override
     public void onClose() {
-        //...
+        createFragmentWithExistingQuestions();
     }
 
     @Override
     public void onCancel() {
-        //...
+        mSearchTask.cancel(false);
     }
 
     @Override
@@ -160,19 +172,31 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     @Override
     public void onSearch(String query) {
-        new SearchTask(
+
+        // Create a new fragment for the questions
+        createFragment(
+                getString(R.string.list_search_progress),
+                true,
+                getString(R.string.list_search_header_title),
+                getString(R.string.list_search_header_subtitle, query),
+                null
+        );
+
+        // Create and start the search task
+        mSearchTask = new SearchTask(
                 this,
                 new SearchTask.Parameters(mQuestions, query)
-        ).execute();
+        );
+        mSearchTask.execute();
+    }
+
+    @Override
+    public void onSearchCancelled() {
+        createFragmentWithExistingQuestions();
     }
 
     @Override
     public void onSearchResults(Question[] questions) {
-        //...
-    }
-
-    @Override
-    public void onSearchFinished() {
-        //...
+        mFragment.setQuestions(questions);
     }
 }

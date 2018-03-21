@@ -11,8 +11,8 @@ import java.util.List;
 public class SearchTask extends AsyncTask<Void, Void, SearchTask.Result> {
 
     interface Listener {
+        void onSearchCancelled();
         void onSearchResults(Question[] questions);
-        void onSearchFinished();
     }
 
     /**
@@ -72,10 +72,12 @@ public class SearchTask extends AsyncTask<Void, Void, SearchTask.Result> {
     }
 
     @Override
+    protected void onCancelled() {
+        mListener.onSearchCancelled();
+    }
+
+    @Override
     protected void onPostExecute(Result result) {
-        if (!result.mWasCancelled) {
-            mListener.onSearchResults(result.mQuestions);
-        }
-        mListener.onSearchFinished();
+        mListener.onSearchResults(result.mQuestions);
     }
 }
