@@ -27,6 +27,8 @@ import java.util.Arrays;
 public class QuestionListFragment extends Fragment
         implements QuestionAdapter.Listener {
 
+    public static final String ARG_TWO_PANE = "com.nathanosman.heidelbergreader.ARG_TWO_PANE";
+
     public static final String ARG_PROGRESS_TEXT = "com.nathanosman.heidelbergreader.ARG_PROGRESS_TEXT";
     public static final String ARG_PROGRESS_CANCEL = "com.nathanosman.heidelbergreader.ARG_PROGRESS_CANCEL";
 
@@ -84,7 +86,7 @@ public class QuestionListFragment extends Fragment
         }
 
         // If questions are present, create an adapter for the RecyclerView
-        Parcelable[] parcelable = getArguments().getParcelableArray(ARG_QUESTIONS);
+        Parcelable[] parcelable = arguments.getParcelableArray(ARG_QUESTIONS);
         if (parcelable != null) {
 
             // Create the adapter for the questions
@@ -92,7 +94,8 @@ public class QuestionListFragment extends Fragment
                     new QuestionAdapter(
                             getActivity(),
                             this,
-                            Arrays.copyOf(parcelable, parcelable.length, Question[].class)
+                            Arrays.copyOf(parcelable, parcelable.length, Question[].class),
+                            arguments.getBoolean(ARG_TWO_PANE)
                     )
             );
 

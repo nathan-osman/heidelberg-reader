@@ -50,6 +50,7 @@ public class QuestionListActivity extends AppCompatActivity implements
 
         // Build the arguments for the fragment
         Bundle arguments = new Bundle();
+        arguments.putBoolean(QuestionListFragment.ARG_TWO_PANE, mTwoPane);
         arguments.putString(QuestionListFragment.ARG_PROGRESS_TEXT, progressText);
         arguments.putBoolean(QuestionListFragment.ARG_PROGRESS_CANCEL, progressCancel);
         arguments.putString(QuestionListFragment.ARG_HEADER_TITLE, headerTitle);

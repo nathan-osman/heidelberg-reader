@@ -23,17 +23,27 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
     private Context mContext;
     private Listener mListener;
     private Question[] mQuestions;
+
+    private boolean mTwoPane;
     private int mSelectedIndex = -1;
 
     /**
      * Create a new question adapter
      * @param context use this context for loading the questions
      * @param listener notification for navigation events
+     * @param questions list of questions for the adapter
+     * @param twoPane enable behavior for two-pane mode
      */
-    QuestionAdapter(Context context, Listener listener, Question[] questions) {
+    QuestionAdapter(Context context, Listener listener, Question[] questions, boolean twoPane) {
         mContext = context;
         mListener = listener;
         mQuestions = questions;
+        mTwoPane = twoPane;
+
+        if (mTwoPane && questions.length > 0) {
+            mSelectedIndex = 0;
+            mListener.onNavigate(questions[0]);
+        }
     }
 
     /**
@@ -82,16 +92,19 @@ class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-                // Grab the index of the previous selection
-                int oldSelectedIndex = mSelectedIndex;
+                if (mTwoPane) {
 
-                // Set the new selection and update the item
-                mSelectedIndex = holder.getAdapterPosition();
-                notifyItemChanged(mSelectedIndex);
+                    // Grab the index of the previous selection
+                    int oldSelectedIndex = mSelectedIndex;
 
-                // If there was a previous selection, update it too
-                if (oldSelectedIndex != -1) {
-                    notifyItemChanged(oldSelectedIndex);
+                    // Set the new selection and update the item
+                    mSelectedIndex = holder.getAdapterPosition();
+                    notifyItemChanged(mSelectedIndex);
+
+                    // If there was a previous selection, update it too
+                    if (oldSelectedIndex != -1) {
+                        notifyItemChanged(oldSelectedIndex);
+                    }
                 }
 
                 // Notify the listener that a question was selected
