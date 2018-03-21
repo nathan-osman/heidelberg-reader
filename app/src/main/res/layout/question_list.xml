@@ -1,32 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/progress"
+    <!-- Spinner displayed while waiting for question data -->
+    <LinearLayout
+        android:id="@+id/progress_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/progress_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/list_progress_text" />
+
+        <Button
+            android:id="@+id/progress_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/list_progress_cancel"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <!-- Header displayed at the top of the question list -->
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/text_margin">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/header_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:id="@+id/header_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/header_close"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:background="@drawable/roundbutton"
+                android:contentDescription="@string/list_header_close"
+                android:src="@drawable/ic_close" />
+
+        </LinearLayout>
+
+        <View
+            android:background="#eeeeee"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip" />
+
+    </LinearLayout>
+
+    <!-- Message displayed in place of questions -->
     <TextView
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:padding="@dimen/text_margin"
         android:textAlignment="center"
         android:visibility="gone" />
 
+    <!-- List of questions shown under the header (if displayed) -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/question_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/header_container"
         android:visibility="gone"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.nathanosman.heidelbergreader.QuestionListFragment"
         tools:listitem="@layout/question_list_content" />
 
-</FrameLayout>
+</RelativeLayout>

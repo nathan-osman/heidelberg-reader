@@ -9,29 +9,45 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Arrays;
 
 /**
  * Display a list of questions
+ *
+ * The fragment accepts four optional arguments: one providing the message displayed until the
+ * question list is supplied, another indicating if the operation can be cancelled, and one each
+ * for the header's title and subtitle.
+ *
+ * The remaining two arguments are supplied by using the setMessage() and setQuestions() methods.
  */
 public class QuestionListFragment extends Fragment
         implements QuestionAdapter.Listener {
 
-    public static final String ARG_MESSAGE = "com.nathanosman.heidelbergreader.ARG_MESSAGE";
-    public static final String ARG_QUESTIONS = "com.nathanosman.heidelbergreader.ARG_QUESTIONS";
+    public static final String ARG_PROGRESS_TEXT = "com.nathanosman.heidelbergreader.ARG_PROGRESS_TEXT";
+    public static final String ARG_PROGRESS_CANCEL = "com.nathanosman.heidelbergreader.ARG_PROGRESS_CANCEL";
+
+    public static final String ARG_HEADER_TITLE = "com.nathanosman.heidelbergreader.ARG_HEADER_TITLE";
+    public static final String ARG_HEADER_SUBTITLE = "com.nathanosman.heidelbergreader.ARG_HEADER_SUBTITLE";
+
+    private static final String ARG_MESSAGE = "com.nathanosman.heidelbergreader.ARG_MESSAGE";
+    private static final String ARG_QUESTIONS = "com.nathanosman.heidelbergreader.ARG_QUESTIONS";
 
     public interface Listener {
+        void onClose();
+        void onCancel();
         void onNavigate(Question question);
     }
 
     private Listener mListener;
 
-    private ProgressBar mProgressBar;
-    private TextView mTextView;
-    private RecyclerView mRecyclerView;
+    private LinearLayout mProgressLayout;
+    private LinearLayout mHeaderLayout;
+    private TextView mMessage;
+    private RecyclerView mQuestions;
 
     /**
      * Mandatory constructor
@@ -61,9 +77,9 @@ public class QuestionListFragment extends Fragment
         // If a message is present, show it
         String message = arguments.getString(ARG_MESSAGE);
         if (message != null) {
-            mTextView.setText(message);
-            mTextView.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
+            mMessage.setText(message);
+            mMessage.setVisibility(View.VISIBLE);
+            mProgressLayout.setVisibility(View.GONE);
             return;
         }
 
@@ -72,7 +88,7 @@ public class QuestionListFragment extends Fragment
         if (parcelable != null) {
 
             // Create the adapter for the questions
-            mRecyclerView.setAdapter(
+            mQuestions.setAdapter(
                     new QuestionAdapter(
                             getActivity(),
                             this,
@@ -85,11 +101,16 @@ public class QuestionListFragment extends Fragment
                     getActivity(),
                     DividerItemDecoration.VERTICAL
             );
-            mRecyclerView.addItemDecoration(decoration);
+            mQuestions.addItemDecoration(decoration);
 
             // Show the list of questions
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
+            mQuestions.setVisibility(View.VISIBLE);
+            mProgressLayout.setVisibility(View.GONE);
+
+            // Show the header if provided
+            if (mHeaderLayout != null) {
+                mHeaderLayout.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -111,9 +132,52 @@ public class QuestionListFragment extends Fragment
         View rootView = inflater.inflate(R.layout.question_list, container, false);
 
         // Retrieve references to the various views
-        mProgressBar = rootView.findViewById(R.id.progress);
-        mTextView = rootView.findViewById(R.id.message);
-        mRecyclerView = rootView.findViewById(R.id.question_list);
+        mProgressLayout = rootView.findViewById(R.id.progress_container);
+        mMessage = rootView.findViewById(R.id.message);
+        mQuestions = rootView.findViewById(R.id.question_list);
+
+        Bundle arguments = getOrCreateArguments();
+
+        // Override the progress text (if provided)
+        String progressText = arguments.getString(ARG_PROGRESS_TEXT);
+        if (progressText != null) {
+            ((TextView) rootView.findViewById(R.id.progress_text)).setText(progressText);
+        }
+
+        // Enable the cancel button if the operation can be cancelled
+        if (arguments.getBoolean(ARG_PROGRESS_CANCEL)) {
+            Button button = rootView.findViewById(R.id.progress_cancel);
+            button.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    mListener.onCancel();
+                }
+            });
+            button.setVisibility(View.VISIBLE);
+        }
+
+        // Initialize the header (if title and subtitle were provided)
+        String headerTitle = arguments.getString(ARG_HEADER_TITLE);
+        String headerSubtitle = arguments.getString(ARG_HEADER_SUBTITLE);
+        if (headerTitle != null && headerSubtitle != null) {
+
+            // Retrieve a reference to the header
+            mHeaderLayout = rootView.findViewById(R.id.header_container);
+
+            // Set the title and subtitle for the header
+            ((TextView) rootView.findViewById(R.id.header_title)).setText(headerTitle);
+            ((TextView) rootView.findViewById(R.id.header_subtitle)).setText(headerSubtitle);
+
+            // Invoke the listener's onClose() method when the close button is tapped
+            rootView.findViewById(R.id.header_close).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    mListener.onClose();
+                }
+            });
+        }
 
         // Refresh the UI in case question data is already available
         refreshUi();

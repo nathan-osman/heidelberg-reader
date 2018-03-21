@@ -6,6 +6,9 @@
     <string name="action_about">About</string>
 
     <!-- List Activity -->
+    <string name="list_progress_text">Please wait…</string>
+    <string name="list_progress_cancel">Cancel</string>
+    <string name="list_header_close">Close</string>
     <string name="list_error_message">An error occurred while loading the questions: %1$s</string>
     <string name="list_question_number">Question %1$d</string>
 

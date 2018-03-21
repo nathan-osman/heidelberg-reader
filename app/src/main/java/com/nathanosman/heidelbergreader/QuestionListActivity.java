@@ -28,6 +28,36 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     private Menu mActions;
 
+    /**
+     * Create a new fragment
+     * @param progressText text shown while the spinner is displayed
+     * @param progressCancel true to allow the operation to be cancelled
+     * @param headerTitle title shown in the header (or null for none)
+     * @param headerSubtitle subtitle shown in the header (or null for none)
+     */
+    private void createFragment(String progressText,
+                                boolean progressCancel,
+                                String headerTitle,
+                                String headerSubtitle) {
+
+        // Build the arguments for the fragment
+        Bundle arguments = new Bundle();
+        arguments.putString(QuestionListFragment.ARG_PROGRESS_TEXT, progressText);
+        arguments.putBoolean(QuestionListFragment.ARG_PROGRESS_CANCEL, progressCancel);
+        arguments.putString(QuestionListFragment.ARG_HEADER_TITLE, headerTitle);
+        arguments.putString(QuestionListFragment.ARG_HEADER_SUBTITLE, headerSubtitle);
+
+        // Create the fragment
+        mFragment = new QuestionListFragment();
+        mFragment.setArguments(arguments);
+
+        // Insert the fragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.question_list_container, mFragment)
+                .commit();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +73,8 @@ public class QuestionListActivity extends AppCompatActivity implements
             mTwoPane = true;
         }
 
-        // Create the question list fragment and insert it
-        mFragment = new QuestionListFragment();
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.question_list_container, mFragment)
-                .commit();
+        // Create an empty question fragment
+        createFragment(null, false, null, null);
 
         // Create a task to load the questions
         new QuestionLoaderTask(this, this).execute();
@@ -86,7 +112,7 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadError(String message) {
-        mFragment.setMessage(message);
+        mFragment.setMessage(getString(R.string.list_error_message, message));
     }
 
     @Override
@@ -97,6 +123,16 @@ public class QuestionListActivity extends AppCompatActivity implements
         if (mActions != null) {
             mActions.findItem(R.id.action_search).setVisible(true);
         }
+    }
+
+    @Override
+    public void onClose() {
+        //...
+    }
+
+    @Override
+    public void onCancel() {
+        //...
     }
 
     @Override
