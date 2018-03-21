@@ -529,5 +529,48 @@
             "Ephesians 2:8-9",
             "Romans 3:28"
         ]
+    },
+    {
+        "number": 61,
+        "question": "Why sayest thou, that thou art righteous only by faith?",
+        "answer": "Not that I am acceptable to God on account of the worthiness of my faith; but because only the satisfaction, righteousness and holiness of Christ is my righteousness before God, and I can receive the same and make it my own in no other way than by faith only.",
+        "references": [
+            "1 Corinthians 4:7",
+            "Philippians 3:9"
+        ]
+    },
+    {
+        "number": 62,
+        "question": "But why cannot our good works be the whole or part of our righteousness before God?",
+        "answer": "Because the righteousness which can stand before the judgment-seat of God, must be perfect throughout and wholly conformable to the divine law; whereas even our best works in this life are all imperfect and defiled with sin.",
+        "references": [
+            "Isaiah 64:6"
+        ]
+    },
+    {
+        "number": 63,
+        "question": "How is it that our good works merit nothing, while yet it is God's will to reward them in this life and in that which is to come?",
+        "answer": "The reward comes not of merit, but of grace.",
+        "references": [
+            "Luke 17:10"
+        ]
+    },
+    {
+        "number": 64,
+        "question": "But does not this doctrine make men careless and profane?",
+        "answer": "No, for it is impossible that those who are implanted into Christ by true faith, should not bring forth fruits of thankfulness.",
+        "references": [
+            "Romans 6:1-2",
+            "Matthew 7:18"
+        ]
+    },
+    {
+        "number": 65,
+        "question": "Since then we are made partakers of Christ, and all His benefits, by faith only, whence comes this faith?",
+        "answer": "The Holy Ghost works it in our hearts by the preaching of the Holy Gospel, and confirms it by the use of the Holy Sacraments.",
+        "references": [
+            "Hebrews 6:18",
+            "Romans 10:17"
+        ]
     }
 ]
