@@ -55,14 +55,14 @@ public class SearchTask extends AsyncTask<Void, Void, SearchTask.Result> {
 
     @Override
     protected Result doInBackground(Void... voids) {
-        String query = mParameters.mQuery;
+        String query = mParameters.mQuery.toLowerCase();
         List<Question> matchedQuestions = new ArrayList<>();
         for (Question question : mParameters.mQuestions) {
             if (isCancelled()) {
                 return new Result();
             }
-            if (question.getQuestion().contains(query) ||
-                    question.getAnswer().contains(query)) {
+            if (question.getQuestion().toLowerCase().contains(query) ||
+                    question.getAnswer().toLowerCase().contains(query)) {
                 matchedQuestions.add(question);
             }
         }
