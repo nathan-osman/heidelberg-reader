@@ -6,8 +6,8 @@ android {
         applicationId "com.nathanosman.heidelbergreader"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 11
-        versionName "1.6.3"
+        versionCode 12
+        versionName "1.6.4"
     }
     buildTypes {
         release {
