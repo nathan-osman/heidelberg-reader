@@ -32,6 +32,7 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     private Menu mActions;
 
+    private boolean mSearchActive;
     private SearchTask mSearchTask;
 
     /**
@@ -72,6 +73,7 @@ public class QuestionListActivity extends AppCompatActivity implements
      * Create a fragment with the existing set of questions
      */
     private void createFragmentWithExistingQuestions() {
+        mSearchActive = false;
         createFragment(null, false, null, null, mQuestions);
     }
 
@@ -141,6 +143,15 @@ public class QuestionListActivity extends AppCompatActivity implements
     }
 
     @Override
+    public void onBackPressed() {
+        if (mSearchActive) {
+            createFragmentWithExistingQuestions();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void onLoadError(String message) {
         mFragment.setMessage(getString(R.string.list_error_message, message));
     }
@@ -190,6 +201,8 @@ public class QuestionListActivity extends AppCompatActivity implements
 
     @Override
     public void onSearch(String query) {
+
+        mSearchActive = true;
 
         // Create a new fragment for the questions
         createFragment(
