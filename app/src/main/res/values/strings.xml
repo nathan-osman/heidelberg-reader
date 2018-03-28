@@ -17,7 +17,6 @@
 
     <!-- Detail activity -->
     <string name="detail_references">References</string>
-    <string name="detail_references_instructions">(tap to open)</string>
 
     <!-- About activity -->
     <string name="about_activity_title">About</string>

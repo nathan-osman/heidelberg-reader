@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/question_detail_layout"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.nathanosman.heidelbergreader.QuestionDetailFragment">
@@ -26,24 +26,20 @@
         android:textIsSelectable="true"
         android:textSize="18sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/text_margin"
-        android:paddingRight="@dimen/text_margin"
-        android:text="@string/detail_references"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textIsSelectable="true"
-        android:textStyle="bold" />
+    <View
+        android:background="#eeeeee"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_marginTop="@dimen/text_margin" />
 
     <TextView
+        android:id="@+id/question_detail_references"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/text_margin"
-        android:paddingLeft="@dimen/text_margin"
-        android:paddingRight="@dimen/text_margin"
-        android:text="@string/detail_references_instructions"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:padding="@dimen/text_margin"
+        android:text="@string/detail_references"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textIsSelectable="true" />
 
 </LinearLayout>

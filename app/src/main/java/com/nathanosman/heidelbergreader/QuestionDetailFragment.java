@@ -118,24 +118,30 @@ public class QuestionDetailFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.question_detail_question)).setText(question.getQuestion());
         ((TextView) rootView.findViewById(R.id.question_detail_answer)).setText(question.getAnswer());
 
-        // Find the layout that will contain the references
-        LinearLayout layout = rootView.findViewById(R.id.question_detail_layout);
-        int padding = getActivity().getResources().getDimensionPixelSize(R.dimen.text_margin);
+        // If there are no references, hide the header
+        if (question.getReferences().length == 0) {
+            rootView.findViewById(R.id.question_detail_references).setVisibility(View.GONE);
+        } else {
 
-        // Create a text view for each of the references
-        for (String reference : question.getReferences()) {
-            TextView refView = new TextView(getActivity());
-            refView.setTag(reference);
-            refView.setOnClickListener(mOnClickListener);
-            refView.setPadding(padding, 0, padding, padding);
-            refView.setPaintFlags(refView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-            refView.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
-            refView.setTextSize(
-                    TypedValue.COMPLEX_UNIT_PX,
-                    getActivity().getResources().getDimension(R.dimen.reference_size)
-            );
-            refView.setText(reference);
-            layout.addView(refView);
+            // Find the layout that will contain the references
+            LinearLayout layout = rootView.findViewById(R.id.question_detail_layout);
+            int padding = getActivity().getResources().getDimensionPixelSize(R.dimen.text_margin);
+
+            // Create a text view for each of the references
+            for (String reference : question.getReferences()) {
+                TextView refView = new TextView(getActivity());
+                refView.setTag(reference);
+                refView.setOnClickListener(mOnClickListener);
+                refView.setPadding(padding, 0, padding, padding);
+                refView.setPaintFlags(refView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                refView.setTextColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
+                refView.setTextSize(
+                        TypedValue.COMPLEX_UNIT_PX,
+                        getActivity().getResources().getDimension(R.dimen.reference_size)
+                );
+                refView.setText(reference);
+                layout.addView(refView);
+            }
         }
 
         return rootView;
