@@ -3,7 +3,6 @@ package com.nathanosman.heidelbergreader.database;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.content.ContentValues;
 import android.support.annotation.NonNull;
 
 @Entity(tableName = Question.TABLE_NAME)
@@ -13,6 +12,7 @@ public class Question {
     public static final String COLUMN_NUMBER = "number";
     public static final String COLUMN_QUESTION = "question";
     public static final String COLUMN_ANSWER = "answer";
+    public static final String COLUMN_DAY_NUMBER = "day_number";
 
     @PrimaryKey
     @ColumnInfo(name = COLUMN_NUMBER)
@@ -26,10 +26,14 @@ public class Question {
     @ColumnInfo(name = COLUMN_ANSWER)
     private final String mAnswer;
 
-    public Question(int number, @NonNull String question, @NonNull String answer) {
+    @ColumnInfo(name = COLUMN_DAY_NUMBER)
+    private final int mDayNumber;
+
+    public Question(int number, @NonNull String question, @NonNull String answer, int dayNumber) {
         mNumber = number;
         mQuestion = question;
         mAnswer = answer;
+        mDayNumber = dayNumber;
     }
 
     public int getNumber() {
@@ -46,11 +50,7 @@ public class Question {
         return mAnswer;
     }
 
-    public static Question fromContentValues(ContentValues values) {
-        return new Question(
-                values.getAsInteger(COLUMN_NUMBER),
-                values.getAsString(COLUMN_QUESTION),
-                values.getAsString(COLUMN_ANSWER)
-        );
+    public int getDayNumber() {
+        return mDayNumber;
     }
 }
