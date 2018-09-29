@@ -18,6 +18,7 @@ public class Verse {
     @ColumnInfo(name = COLUMN_REFERENCE)
     private final String mReference;
 
+    @NonNull
     @ColumnInfo(name = COLUMN_TEXT)
     private final String mText;
 

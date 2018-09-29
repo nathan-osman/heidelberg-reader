@@ -9,8 +9,8 @@ import android.database.Cursor;
 public interface VerseDao {
 
     @Insert
-    long insert(Verse verse);
+    void insert(Verse verse);
 
     @Query("SELECT * FROM " + Verse.TABLE_NAME + " WHERE " + Verse.COLUMN_REFERENCE + " = :reference")
-    Cursor selectById(String reference);
+    Cursor selectByReference(String reference);
 }
